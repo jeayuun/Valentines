@@ -31,7 +31,7 @@ body {
 	align-items: center;
 	height: 100vh;
 	width: 100%;
-	background-color: #fae1dd;
+	background-color: #050002;
 }
 
 
@@ -61,11 +61,11 @@ body {
 	position: relative;
 	width: 300px;
 	height: 200px;
-	background-color: #f08080;
+	background-color: #ac0203;
 }
 
 .envelope:before {
-	background-color: #f08080;
+	background-color: #ac0203;
 	content: "";
 	position: absolute;
 	width: 212px;
@@ -90,7 +90,7 @@ body {
 .card:before {
 	content: "";
 	position: absolute;
-	border: 3px solid #003049;
+	border: 3px solid #ae7474;
 	border-style: dotted;
 	width: 240px;
 	heighT: 140px;
@@ -105,8 +105,18 @@ body {
 	text-align: center;
 	line-height: 25px;
 	top: 19px;
-	left: 85px;
-	color: #003049;
+	left: 60px;
+	color: #490000;
+}
+
+.heart-img {
+    width: 85px; 
+    height: auto; 
+    display: inline-block;
+    margin: auto;
+	position: relative;
+	top: 68px;
+	left: 92px;
 }
 
 .heart {
@@ -150,7 +160,7 @@ body {
 .three,
 .four,
 .five {
-	background-color: red;
+	background-color: rgb(255, 255, 255);
 	display: inline-block;
 	height: 10px;
 	margin: 0 10px;
@@ -171,7 +181,7 @@ body {
 .five:before,
 .five:after {
 	content: "";
-	background-color: red;
+	background-color: rgb(255, 255, 255);
 	border-radius: 50%;
 	height: 10px;
 	position: absolute;
@@ -223,7 +233,7 @@ body {
 
 .front {
 	position: absolute;
-	border-right: 180px solid #f4978e;
+	border-right: 180px solid #b10202;
 	border-top: 95px solid transparent;
 	border-bottom: 100px solid transparent;
 	left: 120px;
@@ -236,7 +246,7 @@ body {
 .front:before {
 	position: absolute;
 	content: "";
-	border-left: 300px solid #f8ad9d;
+	border-left: 300px solid #b60203;
 	border-top: 195px solid transparent;
 	left: -120px;
 	top: -95px;
@@ -249,7 +259,7 @@ body {
 	width: 330px;
 	height: 25px;
 	border-radius: 50%;
-	background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(76, 46, 46, 0.3);
 	top: 265px;
 	left: -15px;
 	animation: scale 3s linear infinite;
@@ -326,7 +336,7 @@ body {
 .modal-content {
 	text-align: center;
 	scrollbar-width: none;
-	background-color: #eae2b7;
+	background-color: #2509c7;
 	box-shadow: -5px -5px 100px rgba(0, 0, 0, 0.4);
 	outline: 3px dotted #003049;
 	outline-offset: -20px;

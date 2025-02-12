@@ -5,65 +5,65 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Love Letter</title>
+    <title>To Mi Habibi💗</title>
 </head>
 <body>
-    <div class='game'>
+    <!-- <div class='game'>
         <div class='game_loader'>
           <div class='game_loader__inner'>
             <div class='subtitle'>
-              <h1>A Love letter!</h1>
+              <h1>To Mi sweetest, most pogi-est Ohana Habibi~</h1>
             </div>
             <div class='bar'>
               <div class='bar_inner'></div>
             </div>
-            <span>Loading Messages...</span>
+            <span>Loading Message...</span>
           </div>
         </div>
         <div class='game_intro'>
           <input checked='checked' class='dialogue' id='intro-1' name='intro' type='radio'>
           <div class='dialogue'>
-            Hello there!
+            Hmmm... 🤔  
             <label for='intro-2'>
               <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowMovement.png'>
             </label>
           </div>
           <input class='dialogue' id='intro-2' name='intro' type='radio'>
           <div class='dialogue'>
-            Im gonna give you a love letter
+            You really asked me that, huh? 😳
             <label for='intro-3'>
               <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowMovement.png'>
             </label>
           </div>
           <input class='dialogue' id='intro-3' name='intro' type='radio'>
           <div class='dialogue'>
-            Geez it sure is dark in here
+            Should I tease you a little first? Hehe 🤭
             <label for='intro-4'>
               <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowMovement.png'>
             </label>
           </div>
           <input class='dialogue' id='intro-4' name='intro' type='radio'>
           <div class='dialogue'>
-            Let me turn on the lamp...
+            Okay okay... My answer is...  
             <label for='intro-5'>
               <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/arrowMovement.png'>
             </label>
           </div>
           <input class='dialogue' id='intro-5' name='intro' type='radio'>
           <div class='dialogue end'>
-            Better. Now read the letter.
+            YES! 💖 Forever and always! 😘  
           </div>
           <input class='dialogue' id='intro-6' name='intro' type='radio'>
           <div class='overlay'></div>
         </div>
-    </div>
+    </div> -->
     <div class="container">  
         <div class="valentines">
             <div class="envelope"></div>
             <div class="front"></div>
             <div class="card">
-                <div class="text">Happy</br> Valentine's</br> Day!</div>
-                <div class="heart"></div>
+                <div class="text">Will I be your </br>forever Valentine?</div>
+                <img src="Yes.png" alt="Heart Yes" class="heart-img">
                 <div class="hearts">
                     <div class="one"></div>
                     <div class="two"></div>
@@ -76,10 +76,117 @@
         <div class="shadow"></div>
     </div>
     <div class="modal" id="modal1">
-      <div class="modal-dialog">
-        <section class="modal-content">Sayangku, putri.<br><br>Terimakasih sudah memilihku dan percaya padaku, Mohon maaf jika selama ini ada kesalahan yang membuatmu sedih ataupun marah dan aku sangat menyesalinya.<br><br>Mohon maaf aku belum bisa mengunjungimu saat ini, jadi saya hanya bisa memberikan kartu ucapan online ini.<br><br>Semoga kamu sehat selalu dan semoga hubungan kita dapat bertahan selama mungkin dan berlanjut ke hubungan yang lebih serius.<br><br>Love you....<br><br><br>-Your boyfie, kaffu.</section>
+      <div class="modal-dialog" style="border-radius: 20px;"></div>
+          <section class="modal-content locked" id="locked-message">
+              <div class="hearts">
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
+                <div class="four"></div>
+                <div class="five"></div>
+              </div>
+              <h2>💌 A Special Letter for You 💌</h2>
+              <p>This letter will open on:</p>
+              <p class="countdown heartbeat" id="countdown"></p>
+              <p class="caption">Just a little more patience, LABYU hehe</p>
+          </section>
+  
+          <section class="modal-content hidden unlocked" id="unlocked-message">
+              <h2>To My Dearest Habibi 💖</h2>
+              <p>Secret muna bleee :P </p>
+          </section>
       </div>
-    </div>
+  </div>
 </body>
 <script src="index.js"></script>
+<style>
+  .hidden {
+      display: none;
+  }
+
+  .modal-content {
+      text-align: center;
+      border-radius: 20px;
+      background: #eae2b7;
+      color: #8b0000;
+      position: relative;
+      overflow: hidden;
+      border: 3px solid #ae7474;
+  }
+
+  .countdown {
+      font-size: 36px;
+      font-weight: bold;
+      color: #ff3333;
+      text-shadow: 0 0 10px rgba(255, 51, 102, 0.8);
+      animation: heartbeat 1.2s infinite alternate, glow 1.5s infinite alternate;
+      display: inline-block;
+  }
+
+  @keyframes heartbeat {
+      from {
+          transform: scale(1);
+      }
+      to {
+          transform: scale(1.1);
+      }
+  }
+
+  @keyframes glow {
+      from {
+          text-shadow: 0 0 10px rgba(251, 159, 182, 0.6);
+      }
+      to {
+          text-shadow: 0 0 20px rgb(253, 73, 56);
+      }
+  }
+
+  /* Unlock message fade-in */
+  .unlocked {
+      animation: fadeIn 2s ease-in-out;
+      text-align: center;
+      padding: 30px;
+  }
+
+  @keyframes fadeIn {
+      0% {
+          opacity: 0;
+          transform: scale(0.8);
+      }
+      100% {
+          opacity: 1;
+          transform: scale(1);
+      }
+  }
+
+  .modal-content h2 {
+      font-size: 32px;
+      color: #490000;
+  }
+
+  .caption {
+      font-size: 18px;
+      color: #444;
+  }
+
+  .unlocked {
+      animation: fadeIn 2s ease-in-out;
+      text-align: center;
+      padding: 30px;
+  }
+
+  .message {
+      font-size: 20px;
+      font-weight: bold;
+      color: #900;
+  }
+
+  .signature {
+      font-size: 18px;
+      font-style: italic;
+      margin-top: 20px;
+      color: #600;
+  }
+  
+</style>
 </html>
