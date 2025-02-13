@@ -16,6 +16,37 @@ domReady(() => {
     })
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const unlockedMessage = document.getElementById("unlocked-message");
+    const audio = document.getElementById("background-music");
+
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.target.classList.contains("unlocked") && !mutation.target.classList.contains("hidden")) {
+                if (audio.paused) {
+                    audio.play().catch((error) => console.log("Autoplay blocked: ", error));
+                }
+            }
+        });
+    });
+
+    observer.observe(unlockedMessage, { attributes: true, attributeFilter: ["class"] });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const audio = document.getElementById("background-music");
+
+    // Save the current time every second
+    setInterval(() => {
+        if (!audio.paused) {
+            localStorage.setItem("musicTime", audio.currentTime);
+        }
+    }, 1000);
+});
+
+document.querySelector(".elegant-button").addEventListener("click", function () {
+    localStorage.setItem("musicTime", document.getElementById("background-music").currentTime);
+});
 
 function updateCountdown() {
     const unlockTime = new Date("February 14, 2025 00:00:00").getTime(); 

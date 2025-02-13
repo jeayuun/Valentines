@@ -7,6 +7,25 @@
     <link rel="stylesheet" href="style.css">
     <title>To Mi Habibi💗</title>
     <style>
+        #videoOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 2s ease-in-out;
+        }
+        #videoOverlay video {
+            width: 100%;
+            height: auto;
+            max-height: 100vh;
+        }
         body {
             display: flex;
             justify-content: center;
@@ -15,8 +34,8 @@
             background-color: #31010d;
             overflow: hidden;
             position: relative;
-            background-image: url('cover.jpg');  /* Add your background image here */
-            background-size: contain;          /* Ensures the entire image fits without zooming */
+            background-image: url('cover.jpg'); 
+            background-size: contain;          
             background-position: center;
         }
         body::before {
@@ -27,7 +46,7 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(circle, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 100%);
-            pointer-events: none; /* Ensures it doesn't interfere with user interactions */
+            pointer-events: none; 
             z-index: 0;
         }
         .container {
@@ -59,7 +78,6 @@
             transform: scale(1.1) rotate(0deg);
             z-index: 3;
         }
-        /* Add test.html styles */
         @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway:wght@300;700&display=swap');
         .right.container {
             display: flex;
@@ -83,15 +101,15 @@
             grid-template-columns: repeat(10, 30px);
             grid-template-rows: repeat(10, 30px);
             gap: 3px;
-            background-image: url('bg.jpg');  /* Add your background image here */
-            background-repeat: repeat;         /* Ensure the image repeats */
-            background-size: contain;          /* Ensures the entire image fits without zooming */
+            background-image: url('bg.jpg');  
+            background-repeat: repeat;        
+            background-size: contain;         
             background-position: center;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
-            justify-items: center;  /* This centers the items horizontally */
-            align-items: center;    /* This centers the items vertically */
+            justify-items: center; 
+            align-items: center;    
         }
         .grid div {
             margin-left: 110px;
@@ -133,9 +151,9 @@
         .word-list ul {
             list-style-type: none;
             padding: 0;
-            display: grid;  /* Use grid layout */
-            grid-template-columns: repeat(2, 1fr); /* Create two columns */
-            gap: 10px; /* Add space between items */
+            display: grid;  
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
         }
 
         .word-list li {
@@ -167,6 +185,12 @@
     </style>
 </head>
 <body>
+    <div id="videoOverlay">
+        <video id="introVideo" autoplay muted playsinline>
+            <source src="intro.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
     <div class="left container" style="margin-left: 0px; margin-top: 0px; margin-right: 150px;">
         <img src="Note.png" class="image note" id="note" alt="Note" style="height: 60%; width: auto; margin-top: 100px;">
         <img src="Photo strip.png" class="image photostrip" id="photostrip" alt="Photo Strip" style="height: auto; width: 40%;">
@@ -272,7 +296,7 @@
                 let rowDiff = secondRow - firstRow;
                 let colDiff = secondCol - firstCol;
         
-                // Normalize to either -1, 0, or 1 to check consistent movement direction
+               
                 if (rowDiff !== 0) rowDiff = rowDiff / Math.abs(rowDiff);
                 if (colDiff !== 0) colDiff = colDiff / Math.abs(colDiff);
         
@@ -293,9 +317,8 @@
             function handleCellClick(event) {
                 const cell = event.target;
         
-                if (cell.classList.contains("found")) return; // Ignore already found letters
+                if (cell.classList.contains("found")) return;
         
-                // Deselect if already selected
                 if (selectedCells.includes(cell)) {
                     cell.classList.remove("selected");
                     selectedCells = selectedCells.filter(c => c !== cell);
@@ -320,9 +343,28 @@
         
             createGrid();
         </script>
-                  
     </div>
+    <audio id="background-music" src="laufey.mp3" preload="auto" autoplay></audio>
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const audio = document.getElementById("background-music");
+
+            const savedTime = localStorage.getItem("musicTime");
+            if (savedTime) {
+                audio.currentTime = parseFloat(savedTime);
+            }
+
+            audio.play().catch(error => console.log("Autoplay blocked:", error));
+
+            setInterval(() => {
+                if (!audio.paused) {
+                    localStorage.setItem("musicTime", audio.currentTime);
+                }
+            }, 1000);
+        });
+        document.getElementById("introVideo").addEventListener("ended", function() {
+            document.getElementById("videoOverlay").style.display = "none";
+        });
         document.getElementById("note").addEventListener("click", function() {
             this.classList.add("active");
             document.getElementById("photostrip").classList.remove("active");
