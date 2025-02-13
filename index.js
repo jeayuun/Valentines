@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     const audio = document.getElementById("background-music");
 
-    // Save the current time every second
     setInterval(() => {
         if (!audio.paused) {
             localStorage.setItem("musicTime", audio.currentTime);
