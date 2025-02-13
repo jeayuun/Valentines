@@ -15,6 +15,20 @@
             background-color: #31010d;
             overflow: hidden;
             position: relative;
+            background-image: url('cover.jpg');  /* Add your background image here */
+            background-size: contain;          /* Ensures the entire image fits without zooming */
+            background-position: center;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.5) 100%);
+            pointer-events: none; /* Ensures it doesn't interfere with user interactions */
+            z-index: 0;
         }
         .container {
             position: relative;
@@ -35,28 +49,53 @@
             transform: rotate(15deg);
             z-index: 2;
         }
+        .image:hover {
+            transform: scale(1.0) rotate(5.05deg);
+        }
+        .right:hover {
+            transform: scale(1.0) rotate(1.05deg);
+        }
         .active {
             transform: scale(1.1) rotate(0deg);
             z-index: 3;
         }
         /* Add test.html styles */
         @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway:wght@300;700&display=swap');
+        .right.container {
+            display: flex;
+            flex-direction: column;
+            background-color: #810c15;
+            padding: 20px;
+            border-radius: 10px;
+            height: 80%; 
+            transition: transform 0.6s ease-in-out, z-index 0.2s;
+        }
         .grid-container {
             display: flex;
             flex-direction: column;
             align-items: center;
+            flex-grow: 3;
+            margin-bottom: 10px;
         }
         .grid {
             display: grid;
+            height: 20000px;
             grid-template-columns: repeat(10, 30px);
             grid-template-rows: repeat(10, 30px);
             gap: 3px;
-            background-color: #ffcee6;
+            background-image: url('bg.jpg');  /* Add your background image here */
+            background-repeat: repeat;         /* Ensure the image repeats */
+            background-size: contain;          /* Ensures the entire image fits without zooming */
+            background-position: center;
             padding: 15px;
             border-radius: 10px;
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+            justify-items: center;  /* This centers the items horizontally */
+            align-items: center;    /* This centers the items vertically */
         }
         .grid div {
+            margin-left: 110px;
+            margin-top: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -68,6 +107,7 @@
             height: 30px;
             cursor: pointer;
             transition: 0.2s ease;
+            text-align: center;
         }
 
         .selected {
@@ -81,28 +121,26 @@
         }
 
         .word-list {
+            height: 10000px;
             margin-top: 20px;
             text-align: center;
             font-size: 18px;
-            color: #D81159;
+            color: #c3c4be;
             font-weight: bold;
+            flex-grow: 1;
+            height: 80px;
         }
-
-        .word-list h2 {
-            font-family: 'Pacifico', cursive;
-            color: #FF1493;
-            font-size: 24px;
-        }
-
         .word-list ul {
             list-style-type: none;
             padding: 0;
+            display: grid;  /* Use grid layout */
+            grid-template-columns: repeat(2, 1fr); /* Create two columns */
+            gap: 10px; /* Add space between items */
         }
 
         .word-list li {
-            margin: 5px 0;
-            padding: 5px;
             transition: 0.3s;
+            font-size: 16px;
         }
 
         .found-word {
@@ -112,7 +150,7 @@
         }
 
         .found-word::before {
-            content: "❤️ ";
+            content: "💌 ";
         }
 
         .congrats {
@@ -133,23 +171,22 @@
         <img src="Note.png" class="image note" id="note" alt="Note" style="height: 60%; width: auto; margin-top: 100px;">
         <img src="Photo strip.png" class="image photostrip" id="photostrip" alt="Photo Strip" style="height: auto; width: 40%;">
     </div>
-    <div class="right container" style="background-color: #aa1238;">
+    <div class="right container" style="background-color: #6f0b24;">
 
         <div class="grid"></div>
 
         <div class="word-list">
-            <h2>💌 Words to Find 💌</h2>
             <ul id="word-list">
                 <li data-word="MOA">Our First Date</li>
                 <li data-word="GAMEROOM">Our First Kiss</li>
-                <li data-word="MIHABIBI">Our Callsign</li>
-                <li data-word="MIAMOR">Our Callsign</li>
+                <li data-word="MIHABIBI">You</li>
+                <li data-word="MIAMOR">Me</li>
                 <li data-word="LUNA">Our Baby</li>
+                <li data-word="HEART">I _____ YOU</li>
             </ul>
         </div>
 
-        <div class="congrats">🎉 You Found All Words! Happy Valentine's! 🎉</div>
-
+        <div class="congrats">🎉 BATAKKK kaya baby kita eh hehe 🎉</div>
         <script>
             const gridData = [
                 ['H', 'R', 'L', 'U', 'N', 'A', 'H', 'T', 'E', 'S'],
@@ -163,71 +200,127 @@
                 ['O', 'A', 'E', 'R', 'O', 'S', 'S', 'S', 'I', 'N'],
                 ['V', 'G', 'R', 'O', 'S', 'S', 'S', 'V', 'M', 'E']
             ];
-
-            const wordsToFind = ["MOA", "GAMEROOM", "MIHABIBI", "MIAMOR", "LUNA"];
+        
+            const wordsToFind = ["MOA", "GAMEROOM", "MIHABIBI", "MIAMOR", "LUNA", "HEART"];
             const foundWords = new Set();
             let selectedCells = [];
-
+        
             const gridContainer = document.querySelector('.grid');
             const wordList = document.getElementById("word-list");
             const congratsMessage = document.querySelector(".congrats");
-
+        
+            function createGrid() {
+                gridContainer.innerHTML = "";
+                gridData.forEach((row, rowIndex) => {
+                    row.forEach((letter, colIndex) => {
+                        const cellElement = document.createElement('div');
+                        cellElement.textContent = letter;
+                        cellElement.dataset.row = rowIndex;
+                        cellElement.dataset.col = colIndex;
+                        cellElement.addEventListener("click", handleCellClick);
+                        gridContainer.appendChild(cellElement);
+                    });
+                });
+            }
+        
             function markWordAsFound(word) {
                 const wordItem = document.querySelector(`[data-word="${word}"]`);
                 if (wordItem) {
                     wordItem.classList.add("found-word");
                 }
             }
-
+        
+            function isWordValid(word) {
+                return wordsToFind.includes(word) || wordsToFind.includes(word.split("").reverse().join(""));
+            }
+        
             function checkWord() {
+                if (selectedCells.length === 0) return;
+        
                 let selectedWord = selectedCells.map(cell => cell.textContent).join("");
-                
-                if (wordsToFind.includes(selectedWord)) {
+                let reversedWord = selectedWord.split("").reverse().join("");
+        
+                if (isWordValid(selectedWord)) {
                     selectedCells.forEach(cell => cell.classList.add("found"));
                     markWordAsFound(selectedWord);
                     foundWords.add(selectedWord);
+                } else if (isWordValid(reversedWord)) {
+                    selectedCells.forEach(cell => cell.classList.add("found"));
+                    markWordAsFound(reversedWord);
+                    foundWords.add(reversedWord);
                 }
-
+        
                 selectedCells = [];
                 if (foundWords.size === wordsToFind.length) {
                     congratsMessage.style.display = "block";
                 }
             }
-
+        
             function clearSelection() {
                 selectedCells.forEach(cell => cell.classList.remove("selected"));
                 selectedCells = [];
             }
-
+        
+            function isStraightLineSelection() {
+                if (selectedCells.length < 2) return true;
+        
+                let firstRow = parseInt(selectedCells[0].dataset.row);
+                let firstCol = parseInt(selectedCells[0].dataset.col);
+                let secondRow = parseInt(selectedCells[1].dataset.row);
+                let secondCol = parseInt(selectedCells[1].dataset.col);
+        
+                let rowDiff = secondRow - firstRow;
+                let colDiff = secondCol - firstCol;
+        
+                // Normalize to either -1, 0, or 1 to check consistent movement direction
+                if (rowDiff !== 0) rowDiff = rowDiff / Math.abs(rowDiff);
+                if (colDiff !== 0) colDiff = colDiff / Math.abs(colDiff);
+        
+                for (let i = 2; i < selectedCells.length; i++) {
+                    let currentRow = parseInt(selectedCells[i].dataset.row);
+                    let currentCol = parseInt(selectedCells[i].dataset.col);
+        
+                    let expectedRow = firstRow + rowDiff * i;
+                    let expectedCol = firstCol + colDiff * i;
+        
+                    if (currentRow !== expectedRow || currentCol !== expectedCol) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        
             function handleCellClick(event) {
                 const cell = event.target;
-
-                if (cell.classList.contains("found")) return;
-
+        
+                if (cell.classList.contains("found")) return; // Ignore already found letters
+        
+                // Deselect if already selected
+                if (selectedCells.includes(cell)) {
+                    cell.classList.remove("selected");
+                    selectedCells = selectedCells.filter(c => c !== cell);
+                    return;
+                }
+        
                 cell.classList.add("selected");
                 selectedCells.push(cell);
-
+        
+                if (!isStraightLineSelection()) {
+                    clearSelection();
+                    return;
+                }
+        
                 if (selectedCells.length > 1) {
                     setTimeout(() => {
                         checkWord();
                         clearSelection();
-                    }, 500);
+                    }, 800);
                 }
             }
-
-            function createGrid() {
-                gridData.forEach(row => {
-                    row.forEach(letter => {
-                        const cellElement = document.createElement('div');
-                        cellElement.textContent = letter;
-                        cellElement.addEventListener("click", handleCellClick);
-                        gridContainer.appendChild(cellElement);
-                    });
-                });
-            }
-
+        
             createGrid();
         </script>
+                  
     </div>
     <script>
         document.getElementById("note").addEventListener("click", function() {
