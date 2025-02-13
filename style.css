@@ -294,6 +294,7 @@ body {
 	max-width: 800px;
 	max-height: 80vh;
 	border-radius: 5px;
+	border: 3px solid #ae7474;
 	background: var(--white);
 	overflow: auto;
 	cursor: default;
@@ -338,7 +339,6 @@ body {
 	scrollbar-width: none;
 	background-color: #2509c7;
 	box-shadow: -5px -5px 100px rgba(0, 0, 0, 0.4);
-	outline: 3px dotted #003049;
 	outline-offset: -20px;
 	padding: 30px;
 }

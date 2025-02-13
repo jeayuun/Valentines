@@ -16,8 +16,9 @@ domReady(() => {
     })
 });
 
+
 function updateCountdown() {
-    const unlockTime = new Date("February 14, 2025 13:00:00").getTime(); 
+    const unlockTime = new Date("February 14, 2025 00:00:00").getTime(); 
     const now = new Date().getTime();
     const timeLeft = unlockTime - now;
 

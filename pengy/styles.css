@@ -1,0 +1,201 @@
+.loading {
+  pointer-events: none; /* Disable interactions until page is fully loaded */
+  opacity: 0.5; /* Optional: Dim the page to indicate loading */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Main container for tablet/desktop */
+.container {
+  position: relative;
+  width: 600px; /* Fixed width for larger screens */
+  aspect-ratio: 367.45 / 301;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* On mobile devices (viewport width <= 768px), have the container fill the width */
+@media screen and (max-width: 768px) {
+  .container {
+    width: 90vw;
+  }
+}
+
+/* ########## Remove stupid safari pointer events?? Not super working ;-; START ########## */
+::part(image-overlay),
+::part(image-overlay-line),
+::part(image-overlay-block) {
+  pointer-events: none !important;
+}
+
+/* Trying another option  */
+#image-overlay,
+.image-overlay-line,
+.image-overlay-block {
+  pointer-events: none !important;
+}
+
+/* Option 3, still not working omg */
+#image-overlay {
+  display: none !important;
+}
+/* ########## Remove stupid safari pointer events?? Not super working ;-; END ########## */
+
+/* Matcha data ending message */
+.message {
+  position: absolute;
+  top: calc(45/376.45 * 100%);
+  width: calc(307/367.45 * 100%);
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 1.5rem;
+  display: none;
+  z-index: 3;
+}
+
+/* ##################### Bubble Business START ################*/
+#speechBubble {
+  position: absolute;
+  z-index: 101;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.askBubble {
+  top: 5%;
+  left: calc(100.58/367.45 * 100%);
+  width: calc(164.87/367.45 * 100% * 0.85);
+  height: calc(82.19/301 * 100% * 0.85);
+}
+
+/* Response bubble, not used anymore as too many things were going on */
+.responseBubble {
+  top: calc(18/301 * 100%);
+  left: calc(113/367.45 * 100%);
+  width: calc(84.25/301 * 100%);
+  height: calc(82.9/301 * 100%);
+}
+
+/* Bubble ask defs */
+.bubble-ask1 { background-image: url('assets/speech-bubbles/bubble-ask1.png'); }
+.bubble-ask2 { background-image: url('assets/speech-bubbles/bubble-ask2.png'); }
+.bubble-ask3 { background-image: url('assets/speech-bubbles/bubble-ask3.png'); }
+.bubble-ask4 { background-image: url('assets/speech-bubbles/bubble-ask4.png'); }
+.bubble-no   { background-image: url('assets/speech-bubbles/bubble-no.png'); }
+.bubble-yes  { background-image: url('assets/speech-bubbles/bubble-yes.png'); }
+/* ##################### Bubble Business END ################*/
+
+
+.character.pax {
+  position: absolute;
+  z-index: 10;
+  width: calc(105.4/367.45 * 100%);
+  height: calc(91.01/301 * 100%);
+  left: calc(45.49/367.35 * 100%);
+  top: calc(95.73/301 * 100%);
+  object-fit: contain;
+}
+
+.character.polly {
+  position: absolute;
+  z-index: 10;
+  width: calc(128.12/367.45 * 100%);
+  height: calc(128.12/301 * 100%);
+  left: calc(194.4/367 * 100%);
+  top: calc(58.5/301 * 100%);
+  /* object-fit: contain; */ 
+}
+
+/* Bonfire (bonfire) */
+.bonfire {
+  position: absolute;
+  width: calc(59.95/367.45 * 100%);
+  height: calc(59.95/301 * 100%);
+  left: calc(150.89/367.45 * 100%);
+  top: calc(141.18/301 * 100%);
+}
+
+/* Controls container for yes/no blocks */
+.controls {
+  position: absolute;
+  bottom: 5%;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5%;
+  z-index: 100;
+}
+
+/* Yes and No blocks options */
+.block {
+  display: block;
+  width: calc(172/367.45 * 100%);
+  height: calc(68.99/301 * 100%);
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.block:hover {
+  transform: scale(1.05);
+}
+
+.block:active {
+  transform: scale(0.95);
+  
+}
+
+
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Ice cracks */
+#iceCrack {
+  position: absolute;
+  z-index: 2;
+  width: calc(102/367.45 * 100%);
+  height: auto;
+  left: calc(210.9/367.45 * 100%);
+  top: calc(163.64/301 * 100%);
+}
+
+.snowflake {
+  position: absolute;
+  top: -50px; 
+  pointer-events: none;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  z-index: 1;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(60vh) rotate(216deg);
+    opacity: 0;
+  }
+  80% {
+    transform: translateY(80vh) rotate(288deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}

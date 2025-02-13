@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>To Mi Habibi💗</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #31010d;
+            overflow: hidden;
+            position: relative;
+        }
+        .container {
+            position: relative;
+            width: 400px;
+            height: 600px;
+        }
+        .image {
+            position: absolute;
+            width: 100%;
+            transition: transform 0.6s ease-in-out, z-index 0.2s;
+            cursor: pointer;
+        }
+        .note {
+            transform: rotate(-10deg);
+            z-index: 1;
+        }
+        .photostrip {
+            transform: rotate(15deg);
+            z-index: 2;
+        }
+        .active {
+            transform: scale(1.1) rotate(0deg);
+            z-index: 3;
+        }
+        /* Add test.html styles */
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway:wght@300;700&display=swap');
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 50px);
+            grid-template-rows: repeat(10, 50px);
+            gap: 5px;
+            background-color: #ffcee6;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .grid div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #FFF0F5;
+            border: 2px solid #D81159;
+            font-size: 20px;
+            font-weight: bold;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .grid div:hover {
+            background-color: #FFC0CB;
+            transform: scale(1.1);
+        }
+
+        .selected {
+            background-color: #FF4081 !important;
+            color: white;
+        }
+
+        .found {
+            background-color: #8BC34A !important;
+            color: white !important;
+        }
+
+        .word-list {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: #D81159;
+            font-weight: bold;
+        }
+
+        .word-list h2 {
+            font-family: 'Pacifico', cursive;
+            color: #FF1493;
+            font-size: 24px;
+        }
+
+        .word-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .word-list li {
+            margin: 5px 0;
+            padding: 5px;
+            transition: 0.3s;
+        }
+
+        .found-word {
+            color: #8BC34A;
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+
+        .found-word::before {
+            content: "❤️ ";
+        }
+
+        .congrats {
+            display: none;
+            font-size: 24px;
+            font-weight: bold;
+            color: #FFD700;
+            background-color: #D81159;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-shadow: 2px 2px #FFC0CB;
+        }
+    </style>
+</head>
+<body>
+    <div class="left container" style="margin-left: 20px; margin-top: 100px;">
+        <img src="Note.png" class="image note" id="note" alt="Note" style="height: 60%; width: auto; margin-top: 100px;">
+        <img src="Photo strip.png" class="image photostrip" id="photostrip" alt="Photo Strip" style="height: auto; width: 50%;">
+    </div>
+    <div class="right container">
+        <h1>💖 Valentine's Word Finder 💖</h1>
+
+        <div class="grid"></div>
+
+        <div class="word-list">
+            <h2>💌 Words to Find 💌</h2>
+            <ul id="word-list">
+                <li data-word="MOA">Our First Date</li>
+                <li data-word="GAMEROOM">Our First Kiss</li>
+                <li data-word="MIHABIBI">Our Callsign</li>
+                <li data-word="MIAMOR">Our Callsign</li>
+                <li data-word="LUNA">Our Baby</li>
+            </ul>
+        </div>
+
+        <div class="congrats">🎉 You Found All Words! Happy Valentine's! 🎉</div>
+
+        <script>
+            const gridData = [
+                ['H', 'R', 'L', 'U', 'N', 'A', 'H', 'T', 'E', 'S'],
+                ['E', 'O', 'U', 'U', 'R', 'O', 'S', 'S', 'S', 'V'],
+                ['A', 'M', 'N', 'L', 'N', 'V', 'E', 'R', 'I', 'A'],
+                ['R', 'O', 'I', 'V', 'E', 'E', 'O', 'S', 'B', 'L'],
+                ['T', 'O', 'V', 'A', 'R', 'O', 'T', 'S', 'I', 'E'],
+                ['S', 'R', 'E', 'R', 'M', 'S', 'S', 'A', 'B', 'N'],
+                ['E', 'E', 'L', 'O', 'V', 'O', 'M', 'O', 'A', 'T'],
+                ['L', 'M', 'V', 'E', 'R', 'O', 'R', 'S', 'H', 'I'],
+                ['O', 'A', 'E', 'R', 'O', 'S', 'S', 'S', 'I', 'N'],
+                ['V', 'G', 'R', 'O', 'S', 'S', 'S', 'V', 'M', 'E']
+            ];
+
+            const wordsToFind = ["MOA", "GAMEROOM", "MIHABIBI", "MIAMOR", "LUNA"];
+            const foundWords = new Set();
+            let selectedCells = [];
+
+            const gridContainer = document.querySelector('.grid');
+            const wordList = document.getElementById("word-list");
+            const congratsMessage = document.querySelector(".congrats");
+
+            function markWordAsFound(word) {
+                const wordItem = document.querySelector(`[data-word="${word}"]`);
+                if (wordItem) {
+                    wordItem.classList.add("found-word");
+                }
+            }
+
+            function checkWord() {
+                let selectedWord = selectedCells.map(cell => cell.textContent).join("");
+                
+                if (wordsToFind.includes(selectedWord)) {
+                    selectedCells.forEach(cell => cell.classList.add("found"));
+                    markWordAsFound(selectedWord);
+                    foundWords.add(selectedWord);
+                }
+
+                selectedCells = [];
+                if (foundWords.size === wordsToFind.length) {
+                    congratsMessage.style.display = "block";
+                }
+            }
+
+            function clearSelection() {
+                selectedCells.forEach(cell => cell.classList.remove("selected"));
+                selectedCells = [];
+            }
+
+            function handleCellClick(event) {
+                const cell = event.target;
+
+                if (cell.classList.contains("found")) return;
+
+                cell.classList.add("selected");
+                selectedCells.push(cell);
+
+                if (selectedCells.length > 1) {
+                    setTimeout(() => {
+                        checkWord();
+                        clearSelection();
+                    }, 500);
+                }
+            }
+
+            function createGrid() {
+                gridData.forEach(row => {
+                    row.forEach(letter => {
+                        const cellElement = document.createElement('div');
+                        cellElement.textContent = letter;
+                        cellElement.addEventListener("click", handleCellClick);
+                        gridContainer.appendChild(cellElement);
+                    });
+                });
+            }
+
+            createGrid();
+        </script>
+    </div>
+    <script>
+        document.getElementById("note").addEventListener("click", function() {
+            this.classList.add("active");
+            document.getElementById("photostrip").classList.remove("active");
+        });
+        
+        document.getElementById("photostrip").addEventListener("click", function() {
+            this.classList.add("active");
+            document.getElementById("note").classList.remove("active");
+        });
+    </script>
+</body>
+</html>
